@@ -1,4 +1,3 @@
-#include <iostream>
 #include <raylib.h>
 
 constexpr int SCREEN_WIDTH = 1000;
@@ -36,8 +35,8 @@ struct Ball {
   }
 
   void reset() {
-    x = GetScreenWidth() / 2;
-    y = GetScreenHeight() / 2;
+    x = (float)GetScreenWidth() / 2;
+    y = (float)GetScreenHeight() / 2;
 
     int speed_choices[2] = {-1, 1};
     speed_x *= speed_choices[GetRandomValue(0, 1)];
@@ -85,19 +84,25 @@ struct CpuPadle : public Paddle {
 
 int main() {
 
-  Ball ball{.x = SCREEN_WIDTH / 2,
-            .y = SCREEN_HEIGHT / 2,
+  Ball ball{.x = (float)SCREEN_WIDTH / 2,
+            .y = (float)SCREEN_HEIGHT / 2,
             .speed_x = 7,
             .speed_y = 7,
             .radius = 20};
 
-  Paddle player{.x = SCREEN_WIDTH - player.width - 10,
-                .y = SCREEN_HEIGHT / 2 - player.height / 2,
-                .height = 120,
-                .width = 25,
-                .speed = 6};
+  Paddle player;
+  player.height = 120;
+  player.width = 25;
+  player.speed = 6;
+  player.x = (float)SCREEN_WIDTH - player.width - 10;
+  player.y = (float)SCREEN_HEIGHT / 2 - player.height / 2;
 
-  CpuPadle cpu{10, SCREEN_HEIGHT / 2 - cpu.height / 2, 120, 25, 6};
+  CpuPadle cpu;
+  cpu.height = 120;
+  cpu.width = 25;
+  cpu.speed = 6;
+  cpu.x = 10;
+  cpu.y = (float)SCREEN_HEIGHT / 2 - cpu.height / 2;
 
   InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Pong");
   SetTargetFPS(60);
